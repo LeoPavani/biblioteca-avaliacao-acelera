@@ -2,6 +2,8 @@ package br.com.acelera.biblioteca.restControllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +31,7 @@ public class AutorController {
 
 	
 	@PostMapping
-	public AutorEntity insereAutor(@RequestBody AutorInput autorInput) {
+	public AutorEntity insereAutor(@RequestBody @Valid AutorInput autorInput) {
 		AutorEntity autor = autorConvert.inputToEntity(autorInput);
 		AutorEntity autorCriado = autorService.insere(autor);
 		return autorCriado;
@@ -48,7 +50,7 @@ public class AutorController {
 	}
 	
 	@PutMapping("{id}")
-	public AutorEntity alteraAutor(@PathVariable Long id, @RequestBody EditaAutorInput input) {
+	public AutorEntity alteraAutor(@PathVariable Long id, @RequestBody @Valid EditaAutorInput input) {
 		AutorEntity autor = autorService.buscaPorId(id);
 		AutorEntity autorAlterado = autorService.altera(autor, input);
 		return autorAlterado;

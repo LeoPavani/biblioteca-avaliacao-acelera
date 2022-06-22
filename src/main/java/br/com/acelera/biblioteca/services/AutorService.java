@@ -31,10 +31,10 @@ public class AutorService {
 	}
 
 	public AutorEntity altera(AutorEntity autor, EditaAutorInput input) {
-		if(!input.getNome().isEmpty()) {
+		if(!input.getNome().isBlank()) {
 			autor.setNome(input.getNome());
 		}
-		if(!input.getBiografia().isEmpty()) {
+		if(!input.getBiografia().isBlank()) {
 			autor.setBiografia(input.getBiografia());
 		}
 		autorRepository.save(autor);
