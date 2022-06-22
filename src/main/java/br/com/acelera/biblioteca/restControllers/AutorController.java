@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.acelera.biblioteca.converts.AutorConvert;
 import br.com.acelera.biblioteca.dto.inputs.AutorInput;
 import br.com.acelera.biblioteca.dto.inputs.EditaAutorInput;
+import br.com.acelera.biblioteca.dto.outputs.AutorOutput;
 import br.com.acelera.biblioteca.entities.AutorEntity;
 import br.com.acelera.biblioteca.services.AutorService;
 
@@ -31,29 +32,33 @@ public class AutorController {
 
 	
 	@PostMapping
-	public AutorEntity insereAutor(@RequestBody @Valid AutorInput autorInput) {
+	public AutorOutput insereAutor(@RequestBody @Valid AutorInput autorInput) {
 		AutorEntity autor = autorConvert.inputToEntity(autorInput);
 		AutorEntity autorCriado = autorService.insere(autor);
-		return autorCriado;
+		AutorOutput autorOutput = autorConvert.entityToOutput(autorCriado);
+		return autorOutput;
 	}
 	
 	@GetMapping
-	public List<AutorEntity> listaAutores() {
+	public List<AutorOutput> listaAutores() {
 		List<AutorEntity> listaDeAutores = autorService.listaTodos();
-		return listaDeAutores;
+		List<AutorOutput> listaDeAutoresOutput = autorConvert.entityListToOutputList(listaDeAutores);
+		return listaDeAutoresOutput;
 	}
 	
 	@GetMapping("{id}")
-	public AutorEntity buscaAutorPorId(@PathVariable Long id) {
+	public AutorOutput buscaAutorPorId(@PathVariable Long id) {
 		AutorEntity autor = autorService.buscaPorId(id);
-		return autor;
+		AutorOutput autorOutput = autorConvert.entityToOutput(autor);
+		return autorOutput;
 	}
 	
 	@PutMapping("{id}")
-	public AutorEntity alteraAutor(@PathVariable Long id, @RequestBody @Valid EditaAutorInput input) {
+	public AutorOutput alteraAutor(@PathVariable Long id, @RequestBody @Valid EditaAutorInput input) {
 		AutorEntity autor = autorService.buscaPorId(id);
 		AutorEntity autorAlterado = autorService.altera(autor, input);
-		return autorAlterado;
+		AutorOutput autorOutput = autorConvert.entityToOutput(autorAlterado);
+		return autorOutput;
 	}
 	
 }
