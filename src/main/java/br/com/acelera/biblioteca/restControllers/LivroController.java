@@ -19,6 +19,7 @@ import br.com.acelera.biblioteca.dto.inputs.EditaLivroInput;
 import br.com.acelera.biblioteca.dto.inputs.LivroInput;
 import br.com.acelera.biblioteca.dto.outputs.LivroOutput;
 import br.com.acelera.biblioteca.entities.LivroEntity;
+import br.com.acelera.biblioteca.services.AutorService;
 import br.com.acelera.biblioteca.services.LivroService;
 
 @RestController
@@ -30,6 +31,9 @@ public class LivroController {
 	
 	@Autowired
 	private LivroService livroService;
+	
+	@Autowired
+	private AutorService autorService;
 
 	
 	@PostMapping
@@ -68,6 +72,13 @@ public class LivroController {
 		LivroEntity livroAlterado = livroService.altera(livro, input);
 		LivroOutput livroOutput = livroConvert.entityToOutput(livroAlterado);
 		return livroOutput;
+	}
+	
+	@GetMapping("busca-por-autor/{idAutor}")
+	public List<LivroOutput> buscaLivrosPorAutor(@PathVariable Long idAutor) {
+		List<LivroEntity> livrosDoAutor = livroService.buscaPorIdDoAutor(idAutor);
+		List<LivroOutput> livrosDoAutorOutput = livroConvert.entityListToOutputList(livrosDoAutor);
+		return livrosDoAutorOutput;
 	}
 	
 }

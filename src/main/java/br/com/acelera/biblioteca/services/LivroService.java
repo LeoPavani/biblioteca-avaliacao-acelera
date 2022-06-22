@@ -60,4 +60,10 @@ public class LivroService {
 		return livro;
 	}
 
+	public List<LivroEntity> buscaPorIdDoAutor(Long idAutor) {
+		List<LivroEntity> livrosDoAutor = livroRepository.findByAutoresId(idAutor);
+		return livrosDoAutor;
+		
+	}
+
 }
