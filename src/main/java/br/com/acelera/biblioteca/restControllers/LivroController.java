@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.acelera.biblioteca.converts.LivroConvert;
 import br.com.acelera.biblioteca.dto.inputs.EditaLivroInput;
 import br.com.acelera.biblioteca.dto.inputs.LivroInput;
+import br.com.acelera.biblioteca.dto.outputs.LivroOutput;
 import br.com.acelera.biblioteca.entities.LivroEntity;
 import br.com.acelera.biblioteca.services.LivroService;
 
@@ -32,22 +33,25 @@ public class LivroController {
 
 	
 	@PostMapping
-	public LivroEntity insereAutor(@RequestBody @Valid LivroInput livroInput) {
+	public LivroOutput insereAutor(@RequestBody @Valid LivroInput livroInput) {
 		LivroEntity livro = livroConvert.inputToEntity(livroInput);
 		LivroEntity livroCriado = livroService.insere(livro);
-		return livroCriado;
+		LivroOutput livroOutput = livroConvert.entityToOutput(livroCriado);
+		return livroOutput;
 	}
 	
 	@GetMapping
-	public List<LivroEntity> listaLivros() {
+	public List<LivroOutput> listaLivros() {
 		List<LivroEntity> listaDeLivros = livroService.listaTodos();
-		return listaDeLivros;
+		List<LivroOutput> listaDeLivrosOutput = livroConvert.entityListToOutputList(listaDeLivros);
+		return listaDeLivrosOutput;
 	}
 	
 	@GetMapping("{id}")
-	public LivroEntity buscaLivroPorId(@PathVariable Long id) {
+	public LivroOutput buscaLivroPorId(@PathVariable Long id) {
 		LivroEntity livro = livroService.buscaPorId(id);
-		return livro;
+		LivroOutput livroOutput = livroConvert.entityToOutput(livro);
+		return livroOutput;
 	}
 	
 	@DeleteMapping("{id}")
@@ -58,11 +62,12 @@ public class LivroController {
 	}
 	
 	@PutMapping("{id}")
-	public LivroEntity alteraLivro(@PathVariable Long id, @RequestBody @Valid EditaLivroInput input) {
+	public LivroOutput alteraLivro(@PathVariable Long id, @RequestBody @Valid EditaLivroInput input) {
 		LivroEntity livro = livroService.buscaPorId(id);
 //		LivroEntity livroParaAlterar = livroConvert.alteraInputToEntity(input);
 		LivroEntity livroAlterado = livroService.altera(livro, input);
-		return livroAlterado;
+		LivroOutput livroOutput = livroConvert.entityToOutput(livroAlterado);
+		return livroOutput;
 	}
 	
 }

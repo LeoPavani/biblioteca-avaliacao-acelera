@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.acelera.biblioteca.dto.inputs.LivroInput;
+import br.com.acelera.biblioteca.dto.outputs.LivroOutput;
 import br.com.acelera.biblioteca.entities.AutorEntity;
 import br.com.acelera.biblioteca.entities.LivroEntity;
 import br.com.acelera.biblioteca.services.AutorService;
@@ -31,6 +32,22 @@ public class LivroConvert {
 		}
 		livro.setAutores(listaDeAutores);
 		return livro;
+	}
+
+
+	public LivroOutput entityToOutput(LivroEntity livroCriado) {
+		LivroOutput livroOutput = modelMapper.map(livroCriado, LivroOutput.class);
+		return livroOutput;
+	}
+
+
+	public List<LivroOutput> entityListToOutputList(List<LivroEntity> listaDeLivros) {
+		List<LivroOutput> listaDeLivrosOutput = new ArrayList<LivroOutput>();
+		for(LivroEntity livro : listaDeLivros) {
+			LivroOutput livroOutput = this.entityToOutput(livro);
+			listaDeLivrosOutput.add(livroOutput);
+		}
+		return listaDeLivrosOutput;
 	}
 
 //	public LivroEntity alteraInputToEntity(EditaLivroInput input) {
