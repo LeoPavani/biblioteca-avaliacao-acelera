@@ -37,6 +37,7 @@ public class AutorService {
 		if(!input.getBiografia().isEmpty()) {
 			autor.setBiografia(input.getBiografia());
 		}
+		autorRepository.save(autor);
 		return autor;
 	}
 

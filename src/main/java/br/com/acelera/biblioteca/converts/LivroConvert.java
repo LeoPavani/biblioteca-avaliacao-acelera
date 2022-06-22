@@ -20,6 +20,7 @@ public class LivroConvert {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
 
 	public LivroEntity inputToEntity(LivroInput livroInput) {
 		LivroEntity livro = modelMapper.map(livroInput, LivroEntity.class);
@@ -31,6 +32,19 @@ public class LivroConvert {
 		livro.setAutores(listaDeAutores);
 		return livro;
 	}
+
+//	public LivroEntity alteraInputToEntity(EditaLivroInput input) {
+//		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+//		LivroEntity livro = modelMapper.map(input, LivroEntity.class);
+//		List<AutorEntity> listaDeAutores = new ArrayList<AutorEntity>();
+//		for(Long id : input.getAutores()) {
+//			AutorEntity autor = autorService.buscaPorId(id);
+//			listaDeAutores.add(autor);
+//		}
+//		livro.setAutores(listaDeAutores);
+//		return livro;
+//		
+//	}
 
 	
 }

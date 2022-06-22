@@ -18,7 +18,7 @@ public class LivroInput {
 	String titulo;
 
 	@NotBlank
-	@Length(max = 4)
+	@Length(max = 4, min = 4)
 	String anoLancamento;
 	
 	@NotEmpty
